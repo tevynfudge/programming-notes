@@ -72,7 +72,84 @@ In this code snippet, the callback to the `getFile()` function is used to displa
 
 ## Promises
 
+A Promise is an object that links code that produces something and code that consumes it.
+
+The syntax of a promise looks like this:
+
+```javascript
+// The code that produces
+let myPromise = new Promise(function(myResolve, myReject) {
+  myResolve(); // when successful
+  myReject();  // when error
+});
+
+// The code that consumes
+myPromise.then(
+  function(value) { /* code if successful */ },
+  function(error) { /* code if some error */ }
+);
+```
+
+A promise object has different results depending on its state:
+
+| State         | Result          |
+| ------------- |:---------------:|
+| Pending       | Undefined       |
+| Fulfilled     | A Result Value  |
+| Rejected      | An Error Object |
+
+Here is an example of a promise using the HTML file from the Asynchronous section:
+
+```javascript
+let myPromise = new Promise(function(myResolve, myReject) {
+  let req = new XMLHttpRequest();
+  req.open('GET', "mycar.htm");
+  req.onload = function() {
+    if (req.status == 200) {
+      myResolve(req.response);
+    } else {
+      myReject("File Not Found");
+    }
+  };
+  req.send();
+});
+
+myPromise.then(
+  function(value) {myDisplayer(value);},
+  function(error) {myDisplayer(error);}
+);
+```
+
+In summary, the first part of the above code returns either `req.response` or `"File Not Found"` depending on if the request succeeds or fails, and the second part of the code displays what was returned by the first part.
+
 ## Async-Await
+
+`async` and `await` are keywords that make promises easier to write.
+
+The `async` keyword makes a function return a promise. The `await` keyword makes a function wait for a promise.
+
+Note that the `await` keyword can only be used inside an async function.
+
+Here is an example using the HTML file from the Asynchronous and Promise sections:
+
+```javascript
+async function getFile() {
+  let myPromise = new Promise(function(myResolve, myReject) {
+    let req = new XMLHttpRequest();
+    req.open('GET', "mycar.html");
+    req.onload = function() {
+      if (req.status == 200) {myResolve(req.response);}
+      else {myReject("File not Found");}
+    };
+    req.send();
+  });
+  document.getElementById("demo").innerHTML = await myPromise;
+}
+
+getFile();
+```
+
+In this example, the promise object is created within the async function, and returns a different response depending on if the request succeeds or fails. The call to change the inner HTML of demo is only executed after the promise is either resolved or rejected.
 
 # Sources
 
