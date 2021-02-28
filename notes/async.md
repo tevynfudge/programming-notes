@@ -4,7 +4,7 @@ In JavaScript, functions are executed in the sequence they are called, not in th
 
 However, sometimes we want a little bit more control over how and when certain functions are called. Callbacks are useful in doing this.
 
-In simplest terms, a callback is a function passed as an argument to another function.
+In simplest terms, a callback is **a function passed as an argument to another function**.
 
 Take this code for example:
 
@@ -30,3 +30,8 @@ If we look more closely at the `myCalculator` function, we see that the sum is c
 ## Promises
 
 ## Async-Await
+
+# Sources
+
+[W3 Schools: JS Async](https://www.w3schools.com/js/js_callback.asp)
+[The Modern JS Tutorial: Promises, async/await](https://javascript.info/async)
